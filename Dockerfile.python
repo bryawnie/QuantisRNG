@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+RUN apt update && apt install -y libusb-1.0-0 libusb-1.0-0-dev
+
+COPY quantis/bin/EasyQuantis /bin/
+COPY quantis/lib64/libQuantis* /lib/
+COPY quantis/lib64/libQuantis* /lib64/
+COPY quantis/lib64/libQuantis* /lib/x86_64-linux-gnu/
+
+COPY main.py /app/
+WORKDIR /app
+
+CMD python3 main.py

@@ -1,0 +1,17 @@
+FROM golang:1.21
+
+RUN apt update && apt install -y libusb-1.0-0 libusb-1.0-0-dev
+
+COPY quantis/include/* /usr/include/
+COPY quantis/bin/EasyQuantis /bin/
+COPY quantis/lib64/ /lib/
+COPY quantis/lib64/ /lib64/
+COPY quantis/lib64/ /lib/x86_64-linux-gnu/
+
+COPY go.mod /go/app/go.mod
+COPY main.go /go/app/main.go
+COPY utils/utils.go /go/app/utils/utils.go
+
+WORKDIR /go/app/
+
+CMD CGO_ENABLED='1' go run .
